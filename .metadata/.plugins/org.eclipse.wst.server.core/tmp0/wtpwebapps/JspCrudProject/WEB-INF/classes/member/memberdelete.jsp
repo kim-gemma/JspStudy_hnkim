@@ -1,0 +1,31 @@
+<%@page import="member.MemberDao"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Dongle&family=Gamja+Flower&family=Nanum+Myeongjo&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<title>Insert title here</title>
+</head>
+<body>
+ <%
+ 	//num읽기
+ 	//1. URL로 전달된 num 파라미터 읽기 (ex: memberdelete.jsp?num=3)
+ 	String num=request.getParameter("num");
+ 	
+ 	//dao선언 해서 불러오는것 아니면 불러올수없음??
+	// 2. MemberDao 객체 생성 (DAO 메서드를 사용하기 위해 반드시 객체 생성 필요)
+ 	MemberDao dao = new MemberDao();
+ 	//삭제메서드 호출
+	// 3. 해당 num 회원 삭제 메서드 실행
+ 	dao.deleteMember(num); // 이렇게 하면 넘기는거
+ 	
+ 	//목록으로 이동
+ 	// 4. 삭제 후 리스트 페이지로 이동 (새로고침 시 중복 삭제 방지)
+ 	response.sendRedirect("memberlist.jsp");
+ %>
+</body>
+</html>

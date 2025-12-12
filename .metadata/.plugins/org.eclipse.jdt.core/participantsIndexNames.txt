@@ -1,0 +1,11 @@
+INDEX VERSION 1.134
+C:\sist1017\work\jspwork\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3747486033.index
+\JspCrudProject\src\main\java
+C:\sist1017\work\jspwork\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3908149969.index
+\JspCrudProject\src\main\java
+C:\sist1017\work\jspwork\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3347375265.index
+\JspProject\src\main\java
+C:\sist1017\work\jspwork\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2806213956.index
+\JspProject\src\main\java
+C:\sist1017\work\jspwork\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3021812475.index
+\JspCrudProject\src\main\java

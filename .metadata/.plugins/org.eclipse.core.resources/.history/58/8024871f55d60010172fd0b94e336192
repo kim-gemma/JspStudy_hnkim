@@ -1,0 +1,15 @@
+package member;
+
+import oracle_db.DbConnect;
+
+public class MemberDao {
+	DbConnect db= new DbConnect();
+	
+	//insert
+	public void insertMember(MemberDto dto)
+	{
+		String sql="insert into member values (seq1.nextval,?,?,?,?, sysdate)";
+	}
+	//select
+	//
+}

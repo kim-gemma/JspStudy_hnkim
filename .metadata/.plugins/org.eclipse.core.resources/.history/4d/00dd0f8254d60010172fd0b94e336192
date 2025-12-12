@@ -1,0 +1,11 @@
+package member;
+
+import oracle_db.DbConnect;
+
+public class MemberDao {
+	DbConnect db= new DbConnect();
+	
+	//insert
+	//select
+	//
+}

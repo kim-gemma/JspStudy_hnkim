@@ -1,0 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div style="width: 500px; margin: 50px 100px;">
+		<form action="addaction.jsp" method="post">
+			<table class="table table-bordered">
+				<caption align="top">b<b>동아리 가입신청</b></caption>
+			</table>
+		</form>
+	</div>
+</body>
+</html>
