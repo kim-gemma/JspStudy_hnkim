@@ -26,7 +26,6 @@
 		var ok=confirm("정말 삭제하실건가요?");
 		if(ok){
 			location.href='memberdelete.jsp?num=' + num;
-
 		}
 		
 	}

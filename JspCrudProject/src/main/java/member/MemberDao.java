@@ -102,6 +102,57 @@ public class MemberDao {
 		}
 	}
 	
-	//update
-	
+	//수정에 필요한 하나의 데이터 조회
+	public MemberDto getOneData(String num) {
+		MemberDto dto=new MemberDto();
+		Connection conn=db.getDbConnect();
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		String sql="select * from member where num=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, num);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto.setNum(rs.getString("num"));
+				dto.setName(rs.getString("name"));
+				dto.setHp(rs.getString("hp"));
+				dto.setDriver(rs.getString("driver"));
+				dto.setJop(rs.getString("job"));
+				dto.setWriteday(rs.getTimestamp("writeday"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(rs, pstmt, conn);
+		}
+		return dto;
+	}
+	//update 
+	public void updateMember(MemberDto dto) {
+		Connection conn=db.getDbConnect();
+		PreparedStatement pstmt=null;
+		
+		String sql="update member set name=?,hp=?,driver=?,job=? where num=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getHp());
+			pstmt.setString(3, dto.getDriver());
+			pstmt.setString(4, dto.getJop());
+			pstmt.setString(5, dto.getNum());
+			
+			pstmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(pstmt, conn);
+		}
+		
+	}
 }

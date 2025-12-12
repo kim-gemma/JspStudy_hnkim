@@ -140,7 +140,7 @@ public class MyInfoDao {
 		}
 		return dto;
 	}
-	//수정
+	//update 
 	public void updateMyinfo(MyInfoDto dto)
 	{
 		Connection conn=db.getDbConnect();
