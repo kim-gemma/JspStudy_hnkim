@@ -85,6 +85,8 @@ public class MyInfoDao {
 	
 	//delete 
 	//왜 void로 해? delete 는?
+	// ▶ delete 작업은 "결과를 화면에 보여줄 필요가 없기 때문에" 반환값을 보통 void로 사용함
+	// ▶ 삭제 성공/실패를 굳이 리턴하지 않아도 되면 void가 가장 단순함
 	public void deleteMyinfo(String num)
 	{
 		Connection conn =db.getDbConnect();

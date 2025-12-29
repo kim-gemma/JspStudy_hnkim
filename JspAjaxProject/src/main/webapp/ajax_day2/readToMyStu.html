@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Dongle&family=Gamja+Flower&family=Nanum+Myeongjo&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<button type="button" class="btn btn-danger"
+id="btnjson">mystu_db읽어오기</button>
+<div id="show"></div>
+
+<script type="text/javascript">
+$("#btnjson").click(function(){
+	
+	$.ajax({
+		type:"get",
+		url:"mystuToJson.jsp",
+		dataType:"json",
+		success:function(res){
+			
+			var s="";
+			$.each(res,function(i,item){
+				
+				s+="<div class='alert alert-info' style='width:400px;'>";
+				s+="<img src='"+item.photo+"' width='100'><br>";
+				s+="num: "+item.num+"<br>";
+				s+="name: "+item.name+"<br>";
+				s+="Java: "+item.java+"<br>";
+				s+="Ajax: "+item.ajax+"<br>";
+				s+="</div>";
+			});
+			
+			$("#show").html(s);
+		}
+	})
+	
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+   <person no="1">
+      <name>조성진</name>
+      <addr>인천</addr>
+   </person>
+   <person no="2">
+      <name>김성주</name>
+      <addr>서울</addr>
+   </person>
+   <person no="3">
+      <name>김민지</name>
+      <addr>경기</addr>
+   </person>
+   <person no="4">
+      <name>이태주</name>
+      <addr>제주</addr>
+   </person>
+   <person no="5">
+      <name>황주현</name>
+      <addr>세종</addr>
+   </person>
+</data>

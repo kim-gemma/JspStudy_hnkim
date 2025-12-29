@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Dongle&family=Gamja+Flower&family=Nanum+Myeongjo&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<title>Insert title here</title>
+<style type="text/css">
+  div.box{
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    box-shadow: 5px 5px 5px gray;
+  }
+</style>
+<script type="text/javascript">
+  $(function(){
+	  
+	  $("#btnshop").click(function(){
+		  
+		  $.ajax({
+			  type:"get",
+			  url:"shopToJson.jsp",
+			  dataType:"json",
+			  success:function(data){
+				  
+				  var s="<table class='table table-bordered' style='width:700px;'>";
+				  s+="<caption align='top'><h4>Shop Json 읽어오기</h4></caption>";
+				  s+="<tr class='table-success'>";
+				  s+="<th width='80'>번호</th><th width='150'>상품명</th><th width='80'>색상</th><th width='150'>가격</th><th width='100'>이미지</th>";
+				  s+="</tr>";
+				  
+				  $.each(data,function(i,elt){
+					  
+					  s+="<tr>";
+					  s+="<td>"+elt.num+"</td>";
+					  s+="<td>"+elt.sangname+"</td>";
+					  s+="<td>"+elt.col+"<br><div class='box' style='background-color:"+elt.col+"'></td>";
+					  
+					  s+="<td>"+elt.price+"</td>";
+					  s+="<td><img src='"+elt.photo+"' width='50'></td>";
+					  s+="</tr>";
+				  })
+				  
+				  s+="</table>";
+				  
+				  $("#show").html(s);
+			  }
+		  })
+	  });
+  })
+</script>
+</head>
+<body>
+<button type="button" class="btn btn-success" id="btnshop">Shop Db 가져오기</button>
+<div id="show"></div>
+</body>
+</html>

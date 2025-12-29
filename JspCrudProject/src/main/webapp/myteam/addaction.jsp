@@ -1,7 +1,5 @@
 <%@page import="mysql_team.TeamDao"%>
 <%@page import="mysql_team.TeamDto"%>
-<%@page import="myinfo.MyInfoDao"%>
-<%@page import="myinfo.MyInfoDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>

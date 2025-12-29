@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sist>
+    <stu name="이민호">
+       <java>88</java>
+       <html>99</html>
+       <ajax>100</ajax>
+    </stu>
+    <stu name="김민지">
+       <java>77</java>
+       <html>88</html>
+       <ajax>66</ajax>
+    </stu>
+    <stu name="홍진영">
+       <java>77</java>
+       <html>98</html>
+       <ajax>68</ajax>
+    </stu>
+</sist>

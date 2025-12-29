@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Dongle&family=Gamja+Flower&family=Nanum+Myeongjo&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+ <h3>폼태그에 데이타 입력후 jsp로 보내기</h3>
+ 이름: <input type="text" id="name" size="10"><br>
+ 연락처: <input type="text" id="hp" size="10"><br>
+ <button type="button" id="btn">ajax로 서버에 보내기</button>
+ <button type="button" id="btn2">ajax2로 서버에 보내기</button>
+ <br>
+ <div id="show"></div>
+ 
+ <script type="text/javascript">
+ 	$("#btn").click(function(){
+ 		
+ 		//입력한값들을 읽는다
+ 		var name=$("#name").val();
+ 		var hp=$("#hp").val();
+ 		
+ 		var data="name="+name+"&hp="+hp; //방법1
+ 		//alert(data);
+ 		
+ 		//ajax 함수를 통해서 백앤드로 데이타를 보낸다
+ 		$.ajax({
+ 			type:"get",
+ 			url:"ex1_read.jsp",
+ 			dataType:"html", /*백앤드에서 아무것도 리턴안할경우*/
+ 			data:{"name":name,"hp":hp}, //방법2
+ 			success:function(){
+ 				
+ 				//alert("success");
+ 				$("#show").html("<h3 class='alert alert-success'>"+data+"</h3>");
+ 			},
+ 			statusCode:{
+ 				404:function(){
+ 					alert("페이지를 찾을수없어요");
+ 				},
+ 				500:function(){
+ 					alert("서버오류....")
+ 				}
+ 			}
+ 			
+ 		})
+ 		
+ 	});	
+ 	
+ 	
+ 	$("#btn2").click(function(){
+ 		
+ 		var name=$("#name").val();
+ 		var hp=$("#hp").val();
+ 		
+ 		$.ajax({
+ 			type:"get",
+ 			url:"ex1_read2.jsp",
+ 			dataType:"xml",
+ 			data:{"name":name,"hp":hp},
+ 			success:function(res){
+ 				//alert("보내기 성공!!!");
+ 				var s="<h2>"+$(res).find("name").text()+"님 데이타를 DB에 추가했어요</h2>";
+ 				$("#show").html(s);
+ 			}
+ 		})
+ 	});
+ 	
+ 	
+ 	
+ </script>
+</body>
+</html>

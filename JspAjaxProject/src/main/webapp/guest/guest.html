@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link
+	href="https://fonts.googleapis.com/css2?family=Dongle&family=Gamja+Flower&family=Nanum+Myeongjo&family=Nanum+Pen+Script&display=swap"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<title>Insert title here</title>
+<style type="text/css">
+div.guest {
+	position: absolute;
+	border: 0px solid gray;
+	font-family: 'Nanum Pen Script';
+	font-size: 1.4em;
+}
+
+div.button {
+	left: 150px;
+	top: 50px;
+	width: 500px;
+	height: 100px;
+	line-height: 100px;
+	text-align: center;
+}
+
+div.addform, div.updateform {
+	left: 100px;
+	top: 170px;
+	width: 550px;
+	height: 400px;
+	padding: 20px 20px;
+}
+
+div.list {
+	left: 800px;
+	top: 100px;
+	width: 600px;
+	height: 800px;
+	padding: 20px 20px;
+}
+
+img.emot, img.uemot {
+	cursor: pointer;
+}
+
+img.select {
+	border: 3px solid red;
+}
+
+span.nick {
+	color: red;
+}
+
+span.day {
+	float: right;
+	color: gray;
+}
+</style>
+<script type="text/javascript">
+	$(function() {
+
+		//처음로드시 리스트 출력
+		list();
+
+		//추가폼 없다가 인사말 추가버튼 누르면 생기게
+		$("div.addform").hide();
+		$("div.updateform").hide();
+
+		$("#btnadd").click(function() {
+			$("div.updateform").hide();
+			$("div.addform").toggle();
+			
+		});
+
+		//이모티콘 2번인덱스에 select 클래스 추가
+		$("img.emot").eq(2).addClass("select");
+
+		//이모티콘 2번의 인덱스의 src경로를 얻어서 input태그에 넣어주기
+		$("#emot").val($("img.emot").eq(2).attr("src"));
+
+		//이모티콘 값 변경하기
+		$("img.emot").click(function() {
+
+			//클릭안한 형제태그 select지우기
+			$(this).siblings().removeClass("select");
+			//현재클릭한 곳 select
+			$(this).addClass("select");
+			//현재클릭한 이미지경로를 input에 경로로 변경해주기
+			$("#emot").val($(this).attr("src"));
+		});
+
+		//저장..post
+		$("#dbsave").click(function() {
+
+			var data = $("#addfrm").serialize();
+			//alert(data);
+
+			$.ajax({
+				type : "post",
+				dataType : "html",
+				url : "guestInsert.jsp",
+				data : data,
+				success : function() {
+					alert("입력성공");
+					//추가가 성공했다면 list()호출
+					//list();
+
+					//입력값 초기화
+					$("#nickname").val('');
+					$("#content").val('');
+
+					//이모티콘 초기화
+					$("img.emot").removeClass("select"); //선택한 이모티콘 클래스 지우기
+					//이모티콘 2번인덱스에 select 클래스 추가
+					$("img.emot").eq(2).addClass("select");
+
+					//이모티콘 2번의 인덱스의 src경로를 얻어서 input태그에 넣어주기
+					$("#emot").val($("img.emot").eq(2).attr("src"));
+
+				}
+			})
+		});
+
+		//삭제 동적 메서드
+		$(document).on("click", "i.del", function() {
+			var num = $(this).attr("num");
+			//alert(num);
+			$.ajax({
+				type : "get",
+				dataType : "html",
+				url : "guestDelete.jsp",
+				data : {
+					"num" : num
+				},
+				success : function() {
+					//목록다시출력
+					list();
+				}
+
+			})
+		});
+
+	})
+
+	$(document).on("click", "img.uemot", function() {
+
+		$("img.uemot").removeClass("select"); // 기존 선택 제거
+		$(this).addClass("select"); // 현재 선택
+
+		// hidden input에 선택한 이미지 경로 저장
+		$("#uemot").val($(this).attr("src"));
+	});
+
+	//수정폼을 띄우기
+	$(document).on("click", "i.mode", function() {
+		var num = $(this).attr("num");
+		// alert(num);
+		//수정폼의 unum의 num을 넣기
+		$("#unum").val(num);
+
+		$.ajax({
+			type : "get",
+			url : "guestOneData.jsp",
+			data : {
+				"num" : num
+			},
+			dataType : "json",
+			success : function(data) {
+
+				// 수정폼에 값 채우기
+				$("#unum").val(data.num);
+				$("#unickname").val(data.nick);
+				$("#ucontent").val(data.content);
+				$("#uemot").val(data.emot);
+				// 이모티콘 선택 표시
+				$("img.uemot").removeClass("select");
+				$("img.uemot").each(function() {
+					if ($(this).attr("src") === data.emot) {
+						$(this).addClass("select");
+					}
+				});
+				// 수정폼 보이기
+				$("div.addform").hide();
+				$("div.updateform").show();
+
+			}
+		})
+
+		//수정..post
+		$("#dbupdate").click(function() {
+
+			var data = $("#updatefrm").serialize();
+			//alert(data);
+
+			$.ajax({
+				type : "post",
+				dataType : "html",
+				url : "guestUpdate.jsp",
+				data : data,
+				success: function() {
+				  //alert("수정성공");
+				  list();
+				  $("div.updateform").hide();
+				}
+			})
+		});
+	})
+
+	function list() {//AJAX로 JSON 받아서 화면에 뿌리는 전형적인 패턴-서버에서 방명록 JSON 목록을 가져와서HTML 문자열로 만들어 div.list 안에 출력하는 함수
+		$
+				.ajax({
+					type : "get", //조회는 get방식 , DB select → get 방식이 관례
+					dataType : "json",
+					url : "guestList.jsp",
+					//요청을 보낼 서버 주소 JSON 만들어주는 JSP
+					//우리가 아까 만든 이거랑 연결됨: <%= arr.toString() %>
+
+					//파라미터 값이 없다는것 데이터 값이 없다는거 list dto 그냥 “목록 줘” 요청만 하는 상황
+					success : function(data) {
+						//alert(data.length);
+						var s = "";
+						if (data.length == 0) {
+							s += "<h4 class='alert alert-success'>방문객이 없습니다.</h4>"
+						} else {
+							//넘어오는 데어터 배열명으로 넘어옴? data → JSON 배열 elt → 배열 안의 방명록 1개 객체	 
+							//elt.nickelt.content elt.emot elt.writeday
+							//⬆️ 이게 가능한 이유는👉 JSP에서 JSON key를 이렇게 만들었기 때문
+							//jsp
+							//ob.put("nick", dto.getNickname());
+							//ob.put("content", dto.getContent());
+							$
+									.each(
+											data,
+											function(i, elt) {
+												s += "<i class='bi bi-pen mode' num="+elt.num+"></i>";
+												s += "<i class='bi bi-trash del' num="+elt.num+"></i>";
+												s += "<table class='table table-bordered'>";
+												s += "<tr height='100'><td>";
+												s += "<span class='nick'>작성자:"
+														+ elt.nick + "</span>";
+												s += "<span class='day'>작성일:"
+														+ elt.writeday
+														+ "</span>";
+												s += "<br>";
+												s += "<pre>" + elt.content;
+												s += "<img src='"+elt.emot+"' width='80' align='right'></pre>";
+												s += "</td></tr></table>";
+
+											});
+						}
+
+						$("div.list").html(s);
+						/*
+						list() 호출
+						↓
+						AJAX → guestList.jsp 요청
+						↓
+						JSP에서 JSON 배열 생성
+						↓
+						JSON → data로 전달 
+						↓
+						$.each로 HTML 생성
+						↓
+						div.list에 출력
+						 */
+
+					}
+				})
+	}
+</script>
+</head>
+<body>
+	<div class="guest button">
+		<button type="button" class="btn btn-danger" id="btnadd">인사말추가</button>
+	</div>
+
+	<div class="guest addform">
+		<form id="addfrm">
+			<table class="table table-bordered">
+				<caption align="top">
+					<b>인사말 남기기</b>
+				</caption>
+				<tr>
+					<th width="100" class="table-success">작성자</th>
+					<td><input type="text" class="form-control" name="nickname"
+						id="nickname" style="width: 120px;"></td>
+				</tr>
+				<tr>
+					<th width="100" class="table-success">인사말</th>
+					<td><textarea style="width: 400px; height: 80px;"
+							class="form-control" name="content" id="content"></textarea></td>
+				</tr>
+				<tr>
+					<th width="100" class="table-success">이모티콘</th>
+					<td><input type="hidden" name="emot" id="emot"> <script
+							type="text/javascript">
+						/* b1~b10.png까지 */
+						var s = "";
+						for (var i = 1; i <= 10; i++) {
+							s += "<img src='../image/avata/b"+i+".png' width='40' class='emot'>";
+
+						}
+						document.write(s);
+					</script></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button type="button" class="btn btn-secondary" id="dbsave">DB에
+							저장하기</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
+	<div class="guest updateform">
+		<form id="updatefrm">
+			<input type="hidden" name="unum" id="unum">
+			<table class="table table-bordered">
+				<caption align="top">
+					<b>인사말 수정</b>
+				</caption>
+				<tr>
+					<th width="100" class="table-success">작성자</th>
+					<td><input type="text" class="form-control" name="unickname"
+						id="unickname" style="width: 120px;"></td>
+				</tr>
+				<tr>
+					<th width="100" class="table-success">인사말</th>
+					<td><textarea style="width: 400px; height: 80px;"
+							class="form-control" name="ucontent" id="ucontent"></textarea></td>
+				</tr>
+				<tr>
+					<th width="100" class="table-success">이모티콘</th>
+					<td><input type="hidden" name="uemot" id="uemot"> <script
+							type="text/javascript">
+						/* b1~b10.png까지 */
+						var s = "";
+						for (var i = 1; i <= 10; i++) {
+							s += "<img src='../image/avata/b"+i+".png' width='40' class='uemot'>";
+
+						}
+						document.write(s);
+					</script></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button type="button" class="btn btn-secondary" id="dbupdate">DB에
+							수정하기</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div class="guest list">list</div>
+
+</body>
+</html>

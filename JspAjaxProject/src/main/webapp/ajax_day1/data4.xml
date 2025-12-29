@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<board>
+  <sawon no="1">
+     <buseo>인사부</buseo>
+     <pay sudang="500000">1000000</pay>
+  </sawon>
+  <sawon no="2">
+     <buseo>기획부</buseo>
+     <pay sudang="600000">1200000</pay>
+  </sawon>
+  <sawon no="3">
+     <buseo>개발부</buseo>
+     <pay sudang="700000">1500000</pay>
+  </sawon>
+</board>
