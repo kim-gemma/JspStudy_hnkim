@@ -6,11 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import mysql.db.DbConnect;
+import mysql_db.DbConnect;
 
 public class LoginDao {
 
-	DbC db=new DbConnect();
+	DbConnect db=new DbConnect();
 	
 	//1.아이디를 통해서 이름을 얻어오기
 	public String getName(String id)

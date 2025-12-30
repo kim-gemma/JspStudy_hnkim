@@ -31,7 +31,7 @@
 	   session.setAttribute("saveok", save);
 	   
 	   //세션유지시간
-	   session.setMaxInactiveInterval(60*60*8); //8시간유지
+	   session.setMaxInactiveInterval(60*60*8); // 60초 60분 8시간 :8시간유지
 	   
 	   //로그인메인으로 이동(원래는 로그아웃폼..)
 	   response.sendRedirect("loginMain.jsp");
